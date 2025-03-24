@@ -37,8 +37,8 @@ else:
         if filename.lower().endswith((".png", ".jpg", ".jpeg")):
             local_path = os.path.join(IMAGE_FOLDER, filename)
             
-            # Upload image to Cloudinary
-            response = cloudinary.uploader.upload(local_path)
+            # Upload image to Cloudinary with its original filename
+            response = cloudinary.uploader.upload(local_path, public_id=os.path.splitext(filename)[0], unique_filename=False, overwrite=True)
             image_url = response["secure_url"]
             image_id = os.path.splitext(filename)[0]  # Remove extension
             image_data[image_id] = {"url": image_url, "password": ACCESS_PIN}
